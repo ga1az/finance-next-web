@@ -12,6 +12,7 @@ import { useCreateAccount } from "@/features/accounts/api/use-create-account";
 import { useOpenAccount } from "../hooks/use-open-account";
 import { useGetAccount } from "../api/use-get-account";
 import { Loader2 } from "lucide-react";
+import { useEditAccount } from "../api/use-edit-account";
 
 const formSchema = insertAccountSchema.pick({ name: true });
 
@@ -22,12 +23,14 @@ export default function EditAccountSheet() {
 
   const accountQuery = useGetAccount();
 
-  const mutation = useCreateAccount();
+  const editMutation = useEditAccount();
+
+  const isPending = editMutation.isPending;
 
   const isLoading = accountQuery.isLoading;
 
   const onSubmit = (values: FormValues) => {
-    mutation.mutate(values, {
+    editMutation.mutate(values, {
       onSuccess: () => {
         onClose();
       },
@@ -59,7 +62,7 @@ export default function EditAccountSheet() {
           <AccountForm
             id={id}
             onSubmit={onSubmit}
-            disabled={mutation.isPending}
+            disabled={isPending}
             defaultValues={defaultValues}
           />
         )}
