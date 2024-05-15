@@ -64,6 +64,7 @@ export default function AccountForm({
                   disabled={disabled}
                   placeholder="e.g Cash, Bank, Credit Cart"
                   {...field}
+                  value={field.value || ""}
                 />
               </FormControl>
             </FormItem>
